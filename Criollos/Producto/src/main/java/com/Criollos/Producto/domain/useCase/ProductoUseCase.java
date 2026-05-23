@@ -1,7 +1,7 @@
 package com.Criollos.Producto.domain.useCase;
 
 import com.Criollos.Producto.domain.model.gateway.ProductoGateway;
-import com.Criollos.Producto.domain.model.producto;
+import com.Criollos.Producto.domain.model.Producto;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
 public class ProductoUseCase {
  private final ProductoGateway productoGateway;
 
- public producto guardarProducto(producto producto){
+ public Producto guardarProducto(Producto producto){
 
   if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
    throw new IllegalArgumentException("El nombre es obligatorio");
@@ -38,22 +38,21 @@ public class ProductoUseCase {
   return productoGateway.guardarProducto(producto);
  }
 
- public producto obtenerProductoPorId(Integer idProducto){
+ public Producto obtenerProductoPorId(Integer idProducto){
   try {
    return productoGateway.buscarProductoPorId(idProducto);
   } catch (Exception e) {
    System.out.println(e.getMessage());
-   return new producto();
+   return new Producto();
   }
  }
 
- public List<producto> obtenerTodosLosProductos(){
+ public List<Producto> obtenerTodosLosProductos(){
   return productoGateway.obtenerTodosLosProductos();
  }
 
- public producto actualizarProducto(Integer id, producto producto) {
-  obtenerProductoPorId(id); // valida que exista
-
+ public Producto actualizarProducto(Integer id, Producto producto) {
+  obtenerProductoPorId(id);
   if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
    throw new IllegalArgumentException("El nombre es obligatorio");
   }
@@ -76,33 +75,34 @@ public class ProductoUseCase {
   }
  }
 
- public producto reducirStock(Integer id, Integer cantidad) {
+ public Producto reducirStock(Integer id, Integer cantidad) {
   if (cantidad == null || cantidad <= 0) {
    throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
   }
-  producto p = obtenerProductoPorId(id);
+  Producto p = obtenerProductoPorId(id);
   if (p.getStock() < cantidad) {
    throw new IllegalArgumentException("Stock insuficiente. Disponible: " + p.getStock());
   }
   return productoGateway.reducirStock(id.longValue(), cantidad);
  }
 
- public producto reponerStock(Integer productoId, Integer cantidad){
+ public Producto reponerStock(Integer productoId, Integer cantidad){
   if (cantidad == null || cantidad <= 0) {
    throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
   }
-  obtenerProductoPorId(productoId); // valida que exista
+  obtenerProductoPorId(productoId);
   return productoGateway.reponerStock(productoId.longValue(), cantidad);
  }
 
- public List<producto> buscarProductoPorNombre(String nombre){
+ public List<Producto> buscarProductoPorNombre(String nombre){
   if (nombre == null || nombre.trim().isEmpty()) {
    throw new IllegalArgumentException("El nombre de búsqueda es obligatorio");
   }
   return productoGateway.buscarPorNombre(nombre);
  }
 
- public List<producto> productosBajoStock(){
+ public List<Producto> productosBajoStock(){
+
   return productoGateway.obtenerProductosBajoStock();
  }
 }
