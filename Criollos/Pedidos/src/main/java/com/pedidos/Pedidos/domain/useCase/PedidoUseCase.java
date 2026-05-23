@@ -101,6 +101,6 @@ public class PedidoUseCase {
     }
 
     private String generarNumeroPedido() {
-        return "PED-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        return "PED-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmmssSSS"));
     }
 }
