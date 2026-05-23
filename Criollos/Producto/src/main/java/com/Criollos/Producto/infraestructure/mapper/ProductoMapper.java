@@ -18,7 +18,7 @@ public class ProductoMapper {
         p.setStock(data.getStock());
         p.setStockMinimo(data.getStockMinimo());
         p.setActivo(data.getActivo());
-        p.setCategoriaId(data.getCategoriaId());
+        p.setCategoria(data.getCategoria());
         return p;
     }
 
@@ -33,7 +33,7 @@ public class ProductoMapper {
         data.setStock(domain.getStock());
         data.setStockMinimo(domain.getStockMinimo());
         data.setActivo(domain.getActivo());
-        data.setCategoriaId(domain.getCategoriaId());
+        data.setCategoria(domain.getCategoria());
         return data;
     }
 }

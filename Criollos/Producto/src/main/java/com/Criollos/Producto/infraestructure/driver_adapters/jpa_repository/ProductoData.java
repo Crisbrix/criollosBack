@@ -33,6 +33,6 @@ public class ProductoData {
 
     private Boolean activo;
 
-    @Column(name = "categoria_id")
-    private Long categoriaId;
+    @Column(name = "categoria")
+    String  categoria;
 }

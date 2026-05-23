@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
             Matcher matcher = INTEGER_PATTERN.matcher(error);
             if (matcher.find()) {
                 valor = matcher.group(1);
-                campo = "stock/stockMinimo/productoId";
+                campo = "stock o stockMinimo";
                 mensaje = "Un campo numérico entero tiene un valor inválido";
                 sugerencia = "Debe ser un número entero sin comillas, por ejemplo: 100";
             }
@@ -116,18 +116,15 @@ public class GlobalExceptionHandler {
             if (ex.getMessage().contains("nombre")) {
                 mensaje = "Ya existe un producto con ese nombre";
                 sugerencia = "Usa un nombre diferente para el producto";
-            } else if (ex.getMessage().contains("sku")) {
-                mensaje = "Ya existe un producto con ese SKU";
-                sugerencia = "Usa un SKU diferente para el producto";
-            } else if (ex.getMessage().contains("codigo_barras")) {
-                mensaje = "Ya existe un producto con ese código de barras";
-                sugerencia = "Verifica el código de barras ingresado";
             } else if (ex.getMessage().contains("cannot be null")) {
                 mensaje = "Campo obligatorio faltante";
-                sugerencia = "Asegúrate de enviar todos los campos requeridos: nombre, precio, stock, sku, codigoBarras";
+                sugerencia = "Asegúrate de enviar todos los campos requeridos: nombre, precio, stock, categoria";
             } else if (ex.getMessage().contains("Duplicate entry")) {
-                mensaje = "Ya existe un registro con esos datos";
-                sugerencia = "Verifica que el nombre, SKU y código de barras sean únicos";
+                mensaje = "Ya existe un producto con esos datos";
+                sugerencia = "Verifica que el nombre sea único";
+            } else if (ex.getMessage().contains("categoria_id")) {
+                mensaje = "La categoría especificada no existe";
+                sugerencia = "Verifica que la categoría sea válida";
             }
         }
 

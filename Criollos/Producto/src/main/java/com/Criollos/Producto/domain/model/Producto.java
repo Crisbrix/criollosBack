@@ -16,5 +16,5 @@ public class Producto {
     private Integer stock;
     private Integer stockMinimo;
     private Boolean activo;
-    private Long categoriaId;
+    private String categoria;
 }
