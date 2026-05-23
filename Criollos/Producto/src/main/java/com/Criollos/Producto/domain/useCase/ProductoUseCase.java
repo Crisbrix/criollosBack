@@ -3,8 +3,11 @@ package com.Criollos.Producto.domain.useCase;
 import com.Criollos.Producto.domain.model.gateway.ProductoGateway;
 import com.Criollos.Producto.domain.model.Producto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class ProductoUseCase {
  private final ProductoGateway productoGateway;
@@ -35,6 +38,21 @@ public class ProductoUseCase {
   if (productoGateway.validarProductoPorNombre(producto.getNombre()) != null) {
    throw new IllegalArgumentException("Ya existe un producto con ese nombre");
   }
+  if (producto.getCategoria() == null || producto.getCategoria().trim().isEmpty()) {
+   throw new IllegalArgumentException("La categoría es obligatoria");
+  }
+  if (producto.getCategoria().trim().matches(".*\\d.*")) {
+   throw new IllegalArgumentException("La categoría no debe contener números");
+  }
+  if (producto.getStockMinimo() == null) {
+   throw new IllegalArgumentException("El stock mínimo es obligatorio");
+  }
+  if (producto.getStockMinimo() < 0) {
+   throw new IllegalArgumentException("El stock mínimo no debe ser negativo");
+  }
+  if (producto.getActivo() == null) {
+   throw new IllegalArgumentException("El estado activo es obligatorio");
+  }
   return productoGateway.guardarProducto(producto);
  }
 
@@ -48,6 +66,7 @@ public class ProductoUseCase {
  }
 
  public List<Producto> obtenerTodosLosProductos(){
+
   return productoGateway.obtenerTodosLosProductos();
  }
 
