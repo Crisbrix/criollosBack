@@ -6,7 +6,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class producto {
+
+public class Producto {
 
     private Integer productoId;
     private String nombre;
@@ -15,5 +16,5 @@ public class producto {
     private Integer stock;
     private Integer stockMinimo;
     private Boolean activo;
-    private Long categoriaId;
+    private String categoria;
 }

@@ -1,20 +1,19 @@
 package com.Criollos.Producto.domain.model.gateway;
 
-import com.Criollos.Producto.domain.model.producto;
+import com.Criollos.Producto.domain.model.Producto;
 
 import java.util.List;
 
 public interface ProductoGateway {
 
-producto guardarProducto(producto producto);
-producto buscarProductoPorId(Integer idProducto);
-List<producto> obtenerTodosLosProductos();
-producto actualizarProducto(Integer idProducto, producto producto);
+Producto guardarProducto(Producto producto);
+Producto buscarProductoPorId(Integer idProducto);
+List<Producto> obtenerTodosLosProductos();
+Producto actualizarProducto(Integer idProducto, Producto producto);
 void  eliminarProductoPorId(Integer idProducto);
-producto reducirStock(Long id, Integer cantidad);
-producto reponerStock(Long id, Integer cantidad);
-List<producto> buscarPorNombre(String nombre);
-List<producto> obtenerPorCategoria(Long categoriaId);
-List<producto> obtenerProductosBajoStock();
-producto validarProductoPorNombre(String nombre);
+Producto reducirStock(Long id, Integer cantidad);
+Producto reponerStock(Long id, Integer cantidad);
+List<Producto> buscarPorNombre(String nombre);
+List<Producto> obtenerProductosBajoStock();
+Producto validarProductoPorNombre(String nombre);
 }
