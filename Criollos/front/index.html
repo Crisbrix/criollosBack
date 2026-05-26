@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criollos - Flujo de prueba</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Criollos</h1>
+        <p>Flujo de prueba: login, producto y pedido.</p>
+      </div>
+      <button id="resetButton" type="button">Reiniciar flujo</button>
+    </header>
+
+    <nav class="steps">
+      <span class="step active" id="stepLogin">1. Login</span>
+      <span class="step" id="stepProducto">2. Producto</span>
+      <span class="step" id="stepPedido">3. Pedido</span>
+    </nav>
+
+    <section class="panel" id="loginPanel">
+      <div class="panel-header">
+        <h2>1. Iniciar sesion</h2>
+        <span>Auth :8080</span>
+      </div>
+
+      <div class="split">
+        <form id="loginForm" class="form">
+          <label>
+            Email
+            <input name="email" type="email" required value="ana@test.com">
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" required value="123456">
+          </label>
+          <label>
+            Cedula para el pedido
+            <input name="cedula" required value="123456">
+          </label>
+          <button type="submit">Entrar</button>
+        </form>
+
+        <form id="usuarioForm" class="form compact">
+          <h3>Crear usuario rapido</h3>
+          <label>
+            Cedula
+            <input name="cedula" required value="123456">
+          </label>
+          <label>
+            Nombre
+            <input name="nombre" required value="Ana">
+          </label>
+          <label>
+            Apellido
+            <input name="apellido" value="Perez">
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" required value="ana@test.com">
+          </label>
+          <label>
+            Usuario
+            <input name="username" value="ana">
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" required value="123456">
+          </label>
+          <label>
+            Edad
+            <input name="edad" type="number" value="25">
+          </label>
+          <label>
+            Telefono
+            <input name="telefono" value="3001234567">
+          </label>
+          <input type="hidden" name="role" value="USER">
+          <input type="hidden" name="estado" value="ACTIVO">
+          <button type="submit">Crear usuario</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="productoPanel">
+      <div class="panel-header">
+        <h2>2. Crear o seleccionar producto</h2>
+        <span>Producto :8081</span>
+      </div>
+
+      <form id="productoForm" class="form">
+        <label>
+          Nombre
+          <input name="nombre" required value="Arepa criolla">
+        </label>
+        <label>
+          Descripcion
+          <input name="descripcion" value="Arepa con queso">
+        </label>
+        <label>
+          Precio
+          <input name="precio" type="number" step="0.01" required value="8500">
+        </label>
+        <label>
+          Stock
+          <input name="stock" type="number" required value="20">
+        </label>
+        <label>
+          Stock minimo
+          <input name="stockMinimo" type="number" required value="5">
+        </label>
+        <label>
+          Categoria
+          <input name="categoria" required value="Comida">
+        </label>
+        <label class="checkbox">
+          <input name="activo" type="checkbox" checked>
+          Activo
+        </label>
+        <button type="submit">Guardar y usar producto</button>
+      </form>
+
+      <div class="inline">
+        <input id="productoManualId" placeholder="ID producto existente" value="1">
+        <button id="usarProductoButton" type="button">Usar ID</button>
+        <button id="listarProductosButton" type="button">Listar productos</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="pedidoPanel">
+      <div class="panel-header">
+        <h2>3. Hacer pedido</h2>
+        <span>Pedidos :8082</span>
+      </div>
+
+      <div class="summary">
+        <strong>Sesion:</strong> <span id="sessionText">Sin login</span>
+        <strong>Producto:</strong> <span id="productText">Sin producto</span>
+      </div>
+
+      <form id="pedidoForm" class="form">
+        <label>
+          Mesa
+          <input name="mesa" value="1">
+        </label>
+        <label>
+          Metodo pago
+          <select name="metodoPago">
+            <option value="EFECTIVO">EFECTIVO</option>
+            <option value="TARJETA">TARJETA</option>
+            <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+          </select>
+        </label>
+        <label>
+          Cantidad
+          <input name="cantidad" type="number" required value="1">
+        </label>
+        <label>
+          Impuesto
+          <input name="impuesto" type="number" step="0.01" value="0">
+        </label>
+        <label class="full">
+          Notas
+          <input name="notas" value="Sin picante">
+        </label>
+        <button type="submit">Crear pedido</button>
+      </form>
+
+      <div class="inline">
+        <input id="buscarPedidoNumero" placeholder="Numero de pedido">
+        <button id="buscarPedidoButton" type="button">Buscar pedido</button>
+        <button id="listarPedidosButton" type="button">Listar pedidos</button>
+      </div>
+    </section>
+
+    <section class="result-panel">
+      <div class="panel-header">
+        <h2>Respuesta</h2>
+        <button id="clearButton" type="button">Limpiar</button>
+      </div>
+      <pre id="output">Primero inicia sesion o crea un usuario de prueba.</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
