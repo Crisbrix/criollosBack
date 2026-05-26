@@ -48,7 +48,8 @@ jacocoTestReport {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
 					'**/*Application.class',
-					'**/*DataJpaRepository.class'
+					'**/*DataJpaRepository.class',
+					'**/client/**'
 			])
 		}))
 	}
@@ -60,7 +61,8 @@ jacocoTestCoverageVerification {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
 					'**/*Application.class',
-					'**/*DataJpaRepository.class'
+					'**/*DataJpaRepository.class',
+					'**/client/**'
 			])
 		}))
 	}

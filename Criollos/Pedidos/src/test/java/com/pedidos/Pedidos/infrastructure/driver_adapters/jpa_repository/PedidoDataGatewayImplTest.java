@@ -138,7 +138,7 @@ class PedidoDataGatewayImplTest {
                 .total(new BigDecimal("11"))
                 .detalles(List.of(com.pedidos.Pedidos.domain.model.DetallePedido.builder()
                         .id(5L)
-                        .productoId(9L)
+                        .productoId(9)
                         .nombreProducto("Arepa")
                         .cantidad(1)
                         .precioUnitario(BigDecimal.TEN)
@@ -162,7 +162,7 @@ class PedidoDataGatewayImplTest {
                 .impuesto(BigDecimal.ONE)
                 .total(new BigDecimal("11"))
                 .build();
-        pedidoData.setDetalles(List.of(new DetallePedidoData(5L, 9L, "Arepa", 1, BigDecimal.TEN, BigDecimal.TEN,
+        pedidoData.setDetalles(List.of(new DetallePedidoData(5L, 9, "Arepa", 1, BigDecimal.TEN, BigDecimal.TEN,
                 "Sin queso", pedidoData)));
         return pedidoData;
     }

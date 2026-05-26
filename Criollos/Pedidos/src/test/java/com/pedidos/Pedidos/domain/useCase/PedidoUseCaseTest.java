@@ -92,15 +92,15 @@ class PedidoUseCaseTest {
     void rechazaDetallesInvalidos() {
         assertDetalleInvalido(DetallePedido.builder().nombreProducto("Arepa").cantidad(1).precioUnitario(BigDecimal.ONE).build(),
                 "Cada detalle debe tener productoId y nombreProducto");
-        assertDetalleInvalido(DetallePedido.builder().productoId(1L).cantidad(1).precioUnitario(BigDecimal.ONE).build(),
+        assertDetalleInvalido(DetallePedido.builder().productoId(1).cantidad(1).precioUnitario(BigDecimal.ONE).build(),
                 "Cada detalle debe tener productoId y nombreProducto");
-        assertDetalleInvalido(DetallePedido.builder().productoId(1L).nombreProducto("Arepa").precioUnitario(BigDecimal.ONE).build(),
+        assertDetalleInvalido(DetallePedido.builder().productoId(1).nombreProducto("Arepa").precioUnitario(BigDecimal.ONE).build(),
                 "La cantidad del producto debe ser mayor a cero");
-        assertDetalleInvalido(DetallePedido.builder().productoId(1L).nombreProducto("Arepa").cantidad(0).precioUnitario(BigDecimal.ONE).build(),
+        assertDetalleInvalido(DetallePedido.builder().productoId(1).nombreProducto("Arepa").cantidad(0).precioUnitario(BigDecimal.ONE).build(),
                 "La cantidad del producto debe ser mayor a cero");
-        assertDetalleInvalido(DetallePedido.builder().productoId(1L).nombreProducto("Arepa").cantidad(1).build(),
+        assertDetalleInvalido(DetallePedido.builder().productoId(1).nombreProducto("Arepa").cantidad(1).build(),
                 "El precio unitario no puede ser negativo");
-        assertDetalleInvalido(DetallePedido.builder().productoId(1L).nombreProducto("Arepa").cantidad(1).precioUnitario(new BigDecimal("-1")).build(),
+        assertDetalleInvalido(DetallePedido.builder().productoId(1).nombreProducto("Arepa").cantidad(1).precioUnitario(new BigDecimal("-1")).build(),
                 "El precio unitario no puede ser negativo");
     }
 
@@ -132,7 +132,7 @@ class PedidoUseCaseTest {
                 .usuarioId(7L)
                 .metodoPago("EFECTIVO")
                 .detalles(List.of(DetallePedido.builder()
-                        .productoId(1L)
+                        .productoId(1)
                         .nombreProducto("Arepa")
                         .cantidad(2)
                         .precioUnitario(new BigDecimal("10.00"))

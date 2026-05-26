@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class DetallePedido {
 
     private Long id;
-    private Long productoId;
+    private Integer productoId;
     private String nombreProducto;
     private Integer cantidad;
     private BigDecimal precioUnitario;

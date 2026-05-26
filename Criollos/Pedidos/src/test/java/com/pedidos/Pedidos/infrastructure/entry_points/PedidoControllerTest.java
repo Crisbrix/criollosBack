@@ -2,6 +2,7 @@ package com.pedidos.Pedidos.infrastructure.entry_points;
 
 import com.pedidos.Pedidos.domain.model.Pedido;
 import com.pedidos.Pedidos.domain.useCase.PedidoUseCase;
+import com.pedidos.Pedidos.infrastructure.client.PedidoIntegracionService;
 import com.pedidos.Pedidos.infrastructure.driver_adapters.jpa_repository.PedidoData;
 import com.pedidos.Pedidos.infrastructure.mapper.PedidoMapper;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,8 @@ import static org.mockito.Mockito.when;
 class PedidoControllerTest {
 
     private final PedidoUseCase useCase = mock(PedidoUseCase.class);
-    private final PedidoController controller = new PedidoController(useCase, new PedidoMapper());
+    private final PedidoIntegracionService integracionService = mock(PedidoIntegracionService.class);
+    private final PedidoController controller = new PedidoController(useCase, new PedidoMapper(), integracionService);
 
     @Test
     void guardarPedidoRetornaPedidoGuardado() {
@@ -31,6 +33,8 @@ class PedidoControllerTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(200);
         assertThat(response.getBody()).isSameAs(pedido);
+        verify(integracionService).validarPedidoConApis(any(Pedido.class));
+        verify(integracionService).reducirStock(pedido);
     }
 
     @Test

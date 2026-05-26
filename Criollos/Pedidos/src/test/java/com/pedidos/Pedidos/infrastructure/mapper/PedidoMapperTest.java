@@ -27,7 +27,7 @@ class PedidoMapperTest {
         LocalDateTime fecha = LocalDateTime.now();
         PedidoData data = new PedidoData(1L, "PED-1", "123", "Ana", "2", 9L, "TARJETA",
                 "PENDIENTE", BigDecimal.TEN, BigDecimal.ONE, new BigDecimal("11"), fecha, fecha,
-                List.of(new DetallePedidoData(5L, 3L, "Jugo", 2, new BigDecimal("5"), BigDecimal.TEN, "Frio", null)));
+                List.of(new DetallePedidoData(5L, 3, "Jugo", 2, new BigDecimal("5"), BigDecimal.TEN, "Frio", null)));
 
         Pedido pedido = mapper.toPedido(data);
 
@@ -61,7 +61,7 @@ class PedidoMapperTest {
         LocalDateTime fecha = LocalDateTime.now();
         Pedido pedido = new Pedido(1L, "PED-1", "123", "Ana", "2", 9L, "TARJETA",
                 "PENDIENTE", BigDecimal.TEN, BigDecimal.ONE, new BigDecimal("11"), fecha, fecha,
-                List.of(new DetallePedido(5L, 3L, "Jugo", 2, new BigDecimal("5"), BigDecimal.TEN, "Frio")));
+                List.of(new DetallePedido(5L, 3, "Jugo", 2, new BigDecimal("5"), BigDecimal.TEN, "Frio")));
 
         PedidoData data = mapper.toPedidoData(pedido);
 

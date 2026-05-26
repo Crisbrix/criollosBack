@@ -2,6 +2,7 @@ package com.pedidos.Pedidos.infrastructure.entry_points;
 
 import com.pedidos.Pedidos.domain.model.Pedido;
 import com.pedidos.Pedidos.domain.useCase.PedidoUseCase;
+import com.pedidos.Pedidos.infrastructure.client.PedidoIntegracionService;
 import com.pedidos.Pedidos.infrastructure.driver_adapters.jpa_repository.PedidoData;
 import com.pedidos.Pedidos.infrastructure.mapper.PedidoMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,14 @@ public class PedidoController {
 
     private final PedidoUseCase pedidoUseCase;
     private final PedidoMapper pedidoMapper;
+    private final PedidoIntegracionService pedidoIntegracionService;
 
     @PostMapping("/guardar")
     public ResponseEntity<Pedido> guardarPedido(@RequestBody PedidoData pedidoData) {
-        Pedido pedidoGuardado = pedidoUseCase.guardarPedido(pedidoMapper.toPedido(pedidoData));
+        Pedido pedido = pedidoMapper.toPedido(pedidoData);
+        pedidoIntegracionService.validarPedidoConApis(pedido);
+        Pedido pedidoGuardado = pedidoUseCase.guardarPedido(pedido);
+        pedidoIntegracionService.reducirStock(pedidoGuardado);
         return new ResponseEntity<>(pedidoGuardado, HttpStatus.OK);
     }
 

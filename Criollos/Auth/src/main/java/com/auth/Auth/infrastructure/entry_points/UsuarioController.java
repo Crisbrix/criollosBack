@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -38,6 +39,25 @@ public class UsuarioController {
     public ResponseEntity<Usuario> obtenerUsuarioPorCedula(@PathVariable String cedula) {
         Usuario usuario = usuarioUseCase.buscarUsuarioPorEmail(cedula);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
+    @GetMapping("/interno/buscar/{cedula}")
+    public ResponseEntity<?> obtenerUsuarioInternoPorCedula(@PathVariable String cedula) {
+        Usuario usuario = usuarioUseCase.buscarUsuarioPorEmail(cedula);
+        if (usuario.getId() == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                    "success", false,
+                    "mensaje", "Usuario no encontrado"
+            ));
+        }
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("id", usuario.getId());
+        response.put("cedula", usuario.getCedula());
+        response.put("nombre", usuario.getNombre());
+        response.put("apellido", usuario.getApellido());
+        response.put("email", usuario.getEmail());
+        response.put("estado", usuario.getEstado());
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/borrar/{cedula}")

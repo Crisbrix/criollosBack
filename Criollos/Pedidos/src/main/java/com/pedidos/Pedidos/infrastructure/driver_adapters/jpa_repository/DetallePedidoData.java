@@ -30,7 +30,7 @@ public class DetallePedidoData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long productoId;
+    private Integer productoId;
 
     private String nombreProducto;
 

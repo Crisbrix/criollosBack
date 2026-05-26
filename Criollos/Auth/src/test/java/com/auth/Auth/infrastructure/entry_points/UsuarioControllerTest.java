@@ -51,6 +51,34 @@ class UsuarioControllerTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    void obtenerUsuarioInternoRetornaDatosSinPassword() {
+        when(usuarioUseCase.buscarUsuarioPorEmail("123")).thenReturn(usuario());
+
+        ResponseEntity<?> response = controller.obtenerUsuarioInternoPorCedula("123");
+
+        Map<String, Object> body = (Map<String, Object>) response.getBody();
+        assertThat(response.getStatusCode().value()).isEqualTo(200);
+        assertThat(body)
+                .containsEntry("id", 1L)
+                .containsEntry("cedula", "123")
+                .containsEntry("nombre", "Ana")
+                .doesNotContainKey("password");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void obtenerUsuarioInternoNoEncontradoRetorna404() {
+        when(usuarioUseCase.buscarUsuarioPorEmail("999")).thenReturn(new Usuario());
+
+        ResponseEntity<?> response = controller.obtenerUsuarioInternoPorCedula("999");
+
+        Map<String, Object> body = (Map<String, Object>) response.getBody();
+        assertThat(response.getStatusCode().value()).isEqualTo(404);
+        assertThat(body).containsEntry("success", false);
+    }
+
+    @Test
     void eliminarUsuarioRetornaMensaje() {
         ResponseEntity<String> response = controller.eliminarUsuario("123");
 
