@@ -4,7 +4,7 @@ import com.criollos.noti.application.dto.OrderItemCommand;
 import com.criollos.noti.application.dto.SendOrderNotificationCommand;
 import com.criollos.noti.domain.exception.NotificationValidationException;
 import com.criollos.noti.domain.model.EmailNotification;
-import com.criollos.noti.domain.port.EmailNotificationSender;
+import com.criollos.noti.domain.Gateway.EmailNotificationSender;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

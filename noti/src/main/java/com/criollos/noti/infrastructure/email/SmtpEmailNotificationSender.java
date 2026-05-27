@@ -2,7 +2,7 @@ package com.criollos.noti.infrastructure.email;
 
 import com.criollos.noti.domain.exception.NotificationException;
 import com.criollos.noti.domain.model.EmailNotification;
-import com.criollos.noti.domain.port.EmailNotificationSender;
+import com.criollos.noti.domain.Gateway.EmailNotificationSender;
 import com.criollos.noti.infrastructure.config.OrderNotificationProperties;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;

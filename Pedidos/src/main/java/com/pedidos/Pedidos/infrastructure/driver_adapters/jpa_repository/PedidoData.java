@@ -37,6 +37,8 @@ public class PedidoData {
 
     private String nombreCliente;
 
+    private String emailCliente;
+
     private String mesa;
 
     private Long usuarioId;

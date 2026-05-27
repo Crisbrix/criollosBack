@@ -128,6 +128,7 @@ class PedidoUseCaseTest {
         return Pedido.builder()
                 .cedulaCliente("123")
                 .nombreCliente("Ana")
+                .emailCliente("ana@example.com")
                 .mesa("1")
                 .usuarioId(7L)
                 .metodoPago("EFECTIVO")

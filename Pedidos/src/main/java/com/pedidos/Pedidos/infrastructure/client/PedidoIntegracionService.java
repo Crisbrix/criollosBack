@@ -2,6 +2,8 @@ package com.pedidos.Pedidos.infrastructure.client;
 
 import com.pedidos.Pedidos.domain.model.DetallePedido;
 import com.pedidos.Pedidos.domain.model.Pedido;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -9,20 +11,26 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class PedidoIntegracionService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PedidoIntegracionService.class);
+
     private final RestClient authClient;
     private final RestClient productoClient;
+    private final RestClient notiClient;
 
     public PedidoIntegracionService(
             RestClient.Builder restClientBuilder,
             @Value("${criollos.auth.url}") String authUrl,
-            @Value("${criollos.producto.url}") String productoUrl
+            @Value("${criollos.producto.url}") String productoUrl,
+            @Value("${criollos.noti.url}") String notiUrl
     ) {
         this.authClient = restClientBuilder.baseUrl(authUrl).build();
         this.productoClient = restClientBuilder.baseUrl(productoUrl).build();
+        this.notiClient = restClientBuilder.baseUrl(notiUrl).build();
     }
 
     public void validarPedidoConApis(Pedido pedido) {
@@ -46,6 +54,18 @@ public class PedidoIntegracionService {
             } catch (RestClientException e) {
                 throw new RuntimeException("No se pudo reducir el stock del producto " + productoId, e);
             }
+        }
+    }
+
+    public void notificarPedidoCreado(Pedido pedido) {
+        try {
+            notiClient.post()
+                    .uri("/api/notifications/orders")
+                    .body(toNotificationRequest(pedido))
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (RestClientException exception) {
+            LOGGER.warn("No se pudo enviar la notificacion del pedido {}", pedido.getNumeroPedido(), exception);
         }
     }
 
@@ -74,6 +94,7 @@ public class PedidoIntegracionService {
         if (pedido.getNombreCliente() == null || pedido.getNombreCliente().isBlank()) {
             pedido.setNombreCliente((usuario.nombre() + " " + usuario.apellido()).trim());
         }
+        pedido.setEmailCliente(usuario.email());
     }
 
     private void validarProductos(Pedido pedido) {
@@ -112,6 +133,31 @@ public class PedidoIntegracionService {
         return productoId;
     }
 
+    private OrderNotificationRequest toNotificationRequest(Pedido pedido) {
+        return new OrderNotificationRequest(
+                pedido.getNumeroPedido(),
+                pedido.getNombreCliente(),
+                pedido.getEmailCliente(),
+                pedido.getEmailCliente(),
+                pedido.getTotal(),
+                toNotificationItems(pedido.getDetalles())
+        );
+    }
+
+    private List<OrderItemRequest> toNotificationItems(List<DetallePedido> detalles) {
+        if (detalles == null) {
+            return List.of();
+        }
+
+        return detalles.stream()
+                .map(detalle -> new OrderItemRequest(
+                        detalle.getNombreProducto(),
+                        detalle.getCantidad(),
+                        detalle.getPrecioUnitario()
+                ))
+                .toList();
+    }
+
     private record UsuarioResponse(
             Long id,
             String cedula,
@@ -131,6 +177,23 @@ public class PedidoIntegracionService {
             Integer stockMinimo,
             Boolean activo,
             String categoria
+    ) {
+    }
+
+    private record OrderNotificationRequest(
+            String orderId,
+            String customerName,
+            String customerEmail,
+            String recipientEmail,
+            BigDecimal total,
+            List<OrderItemRequest> items
+    ) {
+    }
+
+    private record OrderItemRequest(
+            String name,
+            Integer quantity,
+            BigDecimal unitPrice
     ) {
     }
 }

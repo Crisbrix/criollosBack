@@ -35,6 +35,7 @@ public class PedidoController {
         pedidoIntegracionService.validarPedidoConApis(pedido);
         Pedido pedidoGuardado = pedidoUseCase.guardarPedido(pedido);
         pedidoIntegracionService.reducirStock(pedidoGuardado);
+        pedidoIntegracionService.notificarPedidoCreado(pedidoGuardado);
         return new ResponseEntity<>(pedidoGuardado, HttpStatus.OK);
     }
 

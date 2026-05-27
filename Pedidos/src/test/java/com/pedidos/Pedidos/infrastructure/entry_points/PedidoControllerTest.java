@@ -35,6 +35,7 @@ class PedidoControllerTest {
         assertThat(response.getBody()).isSameAs(pedido);
         verify(integracionService).validarPedidoConApis(any(Pedido.class));
         verify(integracionService).reducirStock(pedido);
+        verify(integracionService).notificarPedidoCreado(pedido);
     }
 
     @Test

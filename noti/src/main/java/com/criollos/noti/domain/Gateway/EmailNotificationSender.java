@@ -1,4 +1,4 @@
-package com.criollos.noti.domain.port;
+package com.criollos.noti.domain.Gateway;
 
 import com.criollos.noti.domain.model.EmailNotification;
 

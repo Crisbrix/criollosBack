@@ -21,6 +21,7 @@ public class Pedido {
     private String numeroPedido;
     private String cedulaCliente;
     private String nombreCliente;
+    private String emailCliente;
     private String mesa;
     private Long usuarioId;
     private String metodoPago;

@@ -25,7 +25,7 @@ class PedidoMapperTest {
     @Test
     void conviertePedidoDataAPedidoConDetalles() {
         LocalDateTime fecha = LocalDateTime.now();
-        PedidoData data = new PedidoData(1L, "PED-1", "123", "Ana", "2", 9L, "TARJETA",
+        PedidoData data = new PedidoData(1L, "PED-1", "123", "Ana", "ana@example.com", "2", 9L, "TARJETA",
                 "PENDIENTE", BigDecimal.TEN, BigDecimal.ONE, new BigDecimal("11"), fecha, fecha,
                 List.of(new DetallePedidoData(5L, 3, "Jugo", 2, new BigDecimal("5"), BigDecimal.TEN, "Frio", null)));
 
@@ -35,6 +35,7 @@ class PedidoMapperTest {
         assertThat(pedido.getNumeroPedido()).isEqualTo("PED-1");
         assertThat(pedido.getCedulaCliente()).isEqualTo("123");
         assertThat(pedido.getNombreCliente()).isEqualTo("Ana");
+        assertThat(pedido.getEmailCliente()).isEqualTo("ana@example.com");
         assertThat(pedido.getMesa()).isEqualTo("2");
         assertThat(pedido.getUsuarioId()).isEqualTo(9L);
         assertThat(pedido.getMetodoPago()).isEqualTo("TARJETA");
@@ -59,7 +60,7 @@ class PedidoMapperTest {
     @Test
     void conviertePedidoAPedidoDataConRelacionEnDetalles() {
         LocalDateTime fecha = LocalDateTime.now();
-        Pedido pedido = new Pedido(1L, "PED-1", "123", "Ana", "2", 9L, "TARJETA",
+        Pedido pedido = new Pedido(1L, "PED-1", "123", "Ana", "ana@example.com", "2", 9L, "TARJETA",
                 "PENDIENTE", BigDecimal.TEN, BigDecimal.ONE, new BigDecimal("11"), fecha, fecha,
                 List.of(new DetallePedido(5L, 3, "Jugo", 2, new BigDecimal("5"), BigDecimal.TEN, "Frio")));
 
@@ -69,6 +70,7 @@ class PedidoMapperTest {
         assertThat(data.getNumeroPedido()).isEqualTo("PED-1");
         assertThat(data.getCedulaCliente()).isEqualTo("123");
         assertThat(data.getNombreCliente()).isEqualTo("Ana");
+        assertThat(data.getEmailCliente()).isEqualTo("ana@example.com");
         assertThat(data.getMesa()).isEqualTo("2");
         assertThat(data.getUsuarioId()).isEqualTo(9L);
         assertThat(data.getMetodoPago()).isEqualTo("TARJETA");

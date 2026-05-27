@@ -6,7 +6,7 @@ import com.criollos.noti.application.usecase.SendOrderNotificationUseCase;
 import com.criollos.noti.domain.model.EmailNotification;
 import com.criollos.noti.domain.model.OrderItem;
 import com.criollos.noti.domain.model.OrderNotification;
-import com.criollos.noti.domain.port.EmailNotificationSender;
+import com.criollos.noti.domain.Gateway.EmailNotificationSender;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
