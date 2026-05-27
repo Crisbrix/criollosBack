@@ -1,0 +1,64 @@
+services:
+  - type: web_service
+    name: criollos-auth
+    env: java
+    region: oregon
+    root: Auth
+    buildCommand: ./gradlew clean bootJar --no-daemon
+    startCommand: java -jar build/libs/*.jar
+    envVars:
+      - key: JDK_VERSION
+        value: "21"
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "$PORT"
+    plan: starter
+
+  - type: web_service
+    name: criollos-producto
+    env: java
+    region: oregon
+    root: Producto
+    buildCommand: ./gradlew clean bootJar --no-daemon
+    startCommand: java -jar build/libs/*.jar
+    envVars:
+      - key: JDK_VERSION
+        value: "21"
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "$PORT"
+    plan: starter
+
+  - type: web_service
+    name: criollos-pedidos
+    env: java
+    region: oregon
+    root: Pedidos
+    buildCommand: ./gradlew clean bootJar --no-daemon
+    startCommand: java -jar build/libs/*.jar
+    envVars:
+      - key: JDK_VERSION
+        value: "21"
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "$PORT"
+    plan: starter
+
+  - type: web_service
+    name: criollos-noti
+    env: java
+    region: oregon
+    root: noti
+    buildCommand: ./gradlew clean bootJar --no-daemon
+    startCommand: java -jar build/libs/*.jar
+    envVars:
+      - key: JDK_VERSION
+        value: "21"
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "$PORT"
+    plan: starter
