@@ -1,64 +1,48 @@
 services:
   - type: web_service
     name: criollos-auth
-    env: java
+    env: docker
     region: oregon
     root: Auth
-    buildCommand: ./gradlew clean bootJar --no-daemon
-    startCommand: java -jar build/libs/*.jar
     envVars:
-      - key: JDK_VERSION
-        value: "21"
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: SERVER_PORT
-        value: "$PORT"
+        value: "8080"
     plan: starter
 
   - type: web_service
     name: criollos-producto
-    env: java
+    env: docker
     region: oregon
     root: Producto
-    buildCommand: ./gradlew clean bootJar --no-daemon
-    startCommand: java -jar build/libs/*.jar
     envVars:
-      - key: JDK_VERSION
-        value: "21"
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: SERVER_PORT
-        value: "$PORT"
+        value: "8080"
     plan: starter
 
   - type: web_service
     name: criollos-pedidos
-    env: java
+    env: docker
     region: oregon
     root: Pedidos
-    buildCommand: ./gradlew clean bootJar --no-daemon
-    startCommand: java -jar build/libs/*.jar
     envVars:
-      - key: JDK_VERSION
-        value: "21"
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: SERVER_PORT
-        value: "$PORT"
+        value: "8080"
     plan: starter
 
   - type: web_service
     name: criollos-noti
-    env: java
+    env: docker
     region: oregon
     root: noti
-    buildCommand: ./gradlew clean bootJar --no-daemon
-    startCommand: java -jar build/libs/*.jar
     envVars:
-      - key: JDK_VERSION
-        value: "21"
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: SERVER_PORT
-        value: "$PORT"
+        value: "8080"
     plan: starter
