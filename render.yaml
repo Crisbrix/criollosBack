@@ -22,7 +22,7 @@ services:
       - key: SERVER_PORT
         value: "8080"
       - key: NOTIFICATION_SERVICE_URL
-        value: https://criollos-noti.onrender.com
+        value: https://noti-b116.onrender.com
     plan: starter
 
   - type: web_service
