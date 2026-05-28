@@ -3,6 +3,7 @@ import com.Criollos.Producto.infraestructure.mapper.ProductoMapper;
 import com.Criollos.Producto.domain.model.Producto;
 import com.Criollos.Producto.domain.useCase.ProductoUseCase;
 import com.Criollos.Producto.infraestructure.driver_adapters.jpa_repository.ProductoData;
+import com.Criollos.Producto.infraestructure.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class ProductoController {
 
     private final ProductoUseCase productoUseCase;
     private final ProductoMapper productoMapper;
+    private final NotificationService notificationService;
 
     @PostMapping("/guardar")
     public ResponseEntity<?> guardarProducto(@RequestBody ProductoData productoData) {
@@ -31,6 +33,7 @@ public class ProductoController {
             Producto producto = productoUseCase.guardarProducto(
                     productoMapper.toDomain(productoData)
             );
+            notificationService.sendProductCreatedNotification(producto);
             return ResponseEntity.ok(producto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.ok(Map.of(

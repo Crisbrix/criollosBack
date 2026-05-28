@@ -1,0 +1,52 @@
+services:
+  - type: web_service
+    name: criollos-auth
+    env: docker
+    region: oregon
+    root: Auth
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "8080"
+    plan: starter
+
+  - type: web_service
+    name: criollos-producto
+    env: docker
+    region: oregon
+    root: Producto
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "8080"
+      - key: NOTIFICATION_SERVICE_URL
+        value: https://criollos-noti.onrender.com
+    plan: starter
+
+  - type: web_service
+    name: criollos-pedidos
+    env: docker
+    region: oregon
+    root: Pedidos
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "8080"
+    plan: starter
+
+  - type: web_service
+    name: criollos-noti
+    env: docker
+    region: oregon
+    root: noti
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: "8080"
+      - key: MAIL_PASSWORD
+        value: jdqu xzcx rldd nznm
+    plan: starter
