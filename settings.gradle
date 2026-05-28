@@ -1,2 +1,0 @@
-rootProject.name = 'criollos-back'
-include 'Auth', 'Pedidos', 'Producto', 'noti'
