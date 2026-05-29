@@ -56,26 +56,38 @@ public class PedidoController {
     }
 
     @PutMapping("/actualizar/{numeroPedido}")
-    public ResponseEntity<Pedido> actualizarPedido(
+    public ResponseEntity<?> actualizarPedido(
             @PathVariable String numeroPedido,
             @RequestBody PedidoData pedidoData
     ) {
-        Pedido pedidoActualizado = pedidoUseCase.actualizarPedido(numeroPedido, pedidoMapper.toPedido(pedidoData));
-        return ResponseEntity.ok(pedidoActualizado);
+        try {
+            Pedido pedidoActualizado = pedidoUseCase.actualizarPedido(numeroPedido, pedidoMapper.toPedido(pedidoData));
+            return ResponseEntity.ok(pedidoActualizado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 
     @PutMapping("/estado/{numeroPedido}")
-    public ResponseEntity<Pedido> actualizarEstadoPedido(
+    public ResponseEntity<?> actualizarEstadoPedido(
             @PathVariable String numeroPedido,
             @RequestBody Map<String, String> estadoRequest
     ) {
-        Pedido pedidoActualizado = pedidoUseCase.actualizarEstadoPedido(numeroPedido, estadoRequest.get("estado"));
-        return ResponseEntity.ok(pedidoActualizado);
+        try {
+            Pedido pedidoActualizado = pedidoUseCase.actualizarEstadoPedido(numeroPedido, estadoRequest.get("estado"));
+            return ResponseEntity.ok(pedidoActualizado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 
     @DeleteMapping("/borrar/{numeroPedido}")
-    public ResponseEntity<String> eliminarPedido(@PathVariable String numeroPedido) {
-        pedidoUseCase.eliminarPedidoPorNumero(numeroPedido);
-        return ResponseEntity.ok("Pedido eliminado correctamente");
+    public ResponseEntity<?> eliminarPedido(@PathVariable String numeroPedido) {
+        try {
+            pedidoUseCase.eliminarPedidoPorNumero(numeroPedido);
+            return ResponseEntity.ok(Map.of("success", true, "mensaje", "Pedido eliminado correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 }

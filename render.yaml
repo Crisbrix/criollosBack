@@ -53,6 +53,8 @@ services:
         value: prod
       - key: SERVER_PORT
         value: "8080"
-      - key: MAIL_PASSWORD
-        value: clck fnyn ycsb imow
+      - key: MAIL_USERNAME
+        value: acfa5d001@smtp-brevo.com
+      - key: BREVO_SMTP_KEY
+        value: SECRETO_EN_RENDER
     plan: starter

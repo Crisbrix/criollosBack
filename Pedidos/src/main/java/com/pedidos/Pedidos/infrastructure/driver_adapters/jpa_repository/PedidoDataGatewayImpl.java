@@ -50,10 +50,9 @@ public class PedidoDataGatewayImpl implements PedidoGateway {
     @Override
     @Transactional
     public void eliminarPedidoPorNumero(String numeroPedido) {
-        if (!repository.existsByNumeroPedido(numeroPedido)) {
-            throw new RuntimeException("Pedido no encontrado");
-        }
-        repository.deleteByNumeroPedido(numeroPedido);
+        PedidoData pedido = repository.findByNumeroPedido(numeroPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+        repository.delete(pedido);
     }
 
     @Override
