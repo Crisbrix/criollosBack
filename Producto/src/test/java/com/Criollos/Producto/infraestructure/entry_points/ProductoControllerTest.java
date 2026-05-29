@@ -4,6 +4,7 @@ import com.Criollos.Producto.domain.model.Producto;
 import com.Criollos.Producto.domain.useCase.ProductoUseCase;
 import com.Criollos.Producto.infraestructure.driver_adapters.jpa_repository.ProductoData;
 import com.Criollos.Producto.infraestructure.mapper.ProductoMapper;
+import com.Criollos.Producto.infraestructure.notification.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,6 +28,9 @@ class ProductoControllerTest {
 
     @Mock
     private ProductoMapper productoMapper;
+
+    @Mock
+    private NotificationService notificationService;
 
     @InjectMocks
     private ProductoController productoController;
@@ -57,6 +62,7 @@ class ProductoControllerTest {
     void guardarProducto_exitoso() {
         when(productoMapper.toDomain(productoData)).thenReturn(producto);
         when(productoUseCase.guardarProducto(producto)).thenReturn(producto);
+        doNothing().when(notificationService).sendProductCreatedNotification(producto);
 
         ResponseEntity<?> response = productoController.guardarProducto(productoData);
 
