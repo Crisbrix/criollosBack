@@ -4,6 +4,7 @@ import com.pedidos.Pedidos.domain.model.DetallePedido;
 import com.pedidos.Pedidos.domain.model.Pedido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
@@ -22,11 +23,14 @@ public class PedidoIntegracionService {
     private final RestClient notiClient;
 
     public PedidoIntegracionService(
-            RestClient.Builder restClientBuilder
+            RestClient.Builder restClientBuilder,
+            @Value("${criollos.auth.url}") String authUrl,
+            @Value("${criollos.producto.url}") String productoUrl,
+            @Value("${criollos.noti.url}") String notiUrl
     ) {
-        this.authClient = restClientBuilder.baseUrl("https://auth-j0i2.onrender.com").build();
-        this.productoClient = restClientBuilder.baseUrl("https://producto-2fxd.onrender.com").build();
-        this.notiClient = restClientBuilder.baseUrl("https://pedidos-dg22.onrender.com").build();
+        this.authClient = restClientBuilder.baseUrl(authUrl).build();
+        this.productoClient = restClientBuilder.baseUrl(productoUrl).build();
+        this.notiClient = restClientBuilder.baseUrl(notiUrl).build();
     }
 
     public void validarPedidoConApis(Pedido pedido) {

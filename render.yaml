@@ -35,6 +35,12 @@ services:
         value: prod
       - key: SERVER_PORT
         value: "8080"
+      - key: CRIOLLOS_AUTH_URL
+        value: https://auth-j0i2.onrender.com
+      - key: CRIOLLOS_PRODUCTO_URL
+        value: https://producto-2fxd.onrender.com
+      - key: CRIOLLOS_NOTI_URL
+        value: https://noti-b116.onrender.com
     plan: starter
 
   - type: web_service
