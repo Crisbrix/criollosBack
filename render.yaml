@@ -54,5 +54,5 @@ services:
       - key: SERVER_PORT
         value: "8080"
       - key: MAIL_PASSWORD
-        value: jdqu xzcx rldd nznm
+        value: clck fnyn ycsb imow
     plan: starter
