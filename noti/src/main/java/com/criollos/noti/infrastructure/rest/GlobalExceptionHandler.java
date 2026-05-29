@@ -33,9 +33,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotificationException.class)
     public ResponseEntity<ApiErrorResponse> handleNotification(NotificationException exception) {
+        String msg = exception.getMessage();
+        if (exception.getCause() != null) {
+            msg += " | " + exception.getCause().getMessage();
+        }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                exception.getMessage(),
+                msg,
                 Instant.now()
         ));
     }
