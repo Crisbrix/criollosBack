@@ -80,7 +80,7 @@ class UsuarioControllerTest {
 
     @Test
     void eliminarUsuarioRetornaMensaje() {
-        ResponseEntity<String> response = controller.eliminarUsuario("123");
+        ResponseEntity<String> response = (ResponseEntity<String>) controller.eliminarUsuario("123");
 
         assertThat(response.getBody()).isEqualTo("Usuario eliminado correctamente");
         verify(usuarioUseCase).eliminarUsuarioPorEmail("123");
@@ -92,7 +92,7 @@ class UsuarioControllerTest {
         when(usuarioUseCase.actualizarUsuario(org.mockito.ArgumentMatchers.eq("123"),
                 org.mockito.ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
 
-        ResponseEntity<Usuario> response = controller.actualizarUsuario("123", data());
+        ResponseEntity<Usuario> response = (ResponseEntity<Usuario>) controller.actualizarUsuario("123", data());
 
         assertThat(response.getBody()).isSameAs(usuario);
     }

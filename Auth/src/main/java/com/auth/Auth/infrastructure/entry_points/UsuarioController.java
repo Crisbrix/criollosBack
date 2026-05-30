@@ -74,6 +74,10 @@ public class UsuarioController {
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<?> actualizarUsuario(@PathVariable String cedula, @RequestBody UsuarioData usuarioData) {
         try {
+            if (usuarioData.getPassword() == null || usuarioData.getPassword().isBlank()) {
+                Usuario existente = usuarioUseCase.buscarUsuarioPorEmail(cedula);
+                usuarioData.setPassword(existente.getPassword());
+            }
             Usuario usuarioActualizado = usuarioUseCase.actualizarUsuario(cedula, usuarioMapper.toUsuario(usuarioData));
             return ResponseEntity.ok(usuarioActualizado);
         } catch (Exception e) {
