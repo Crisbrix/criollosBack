@@ -119,6 +119,9 @@ public class GlobalExceptionHandler {
             } else if (ex.getMessage().contains("categoria_id")) {
                 mensaje = "La categoría especificada no existe";
                 sugerencia = "Verifica que la categoría sea válida";
+            } else if (ex.getMessage().contains("Cannot delete or update a parent row") || ex.getMessage().contains("foreign key constraint")) {
+                mensaje = "El producto no se puede eliminar porque tiene pedidos asociados.";
+                sugerencia = "Elimina primero los pedidos que contienen este producto.";
             }
         }
 

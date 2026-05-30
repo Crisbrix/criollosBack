@@ -5,6 +5,7 @@ import com.Criollos.Producto.domain.useCase.ProductoUseCase;
 import com.Criollos.Producto.infraestructure.driver_adapters.jpa_repository.ProductoData;
 import com.Criollos.Producto.infraestructure.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -92,6 +93,11 @@ public class ProductoController {
             return ResponseEntity.ok(Map.of(
                     "success", true,
                     "mensaje", "Producto eliminado correctamente"
+            ));
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.ok(Map.of(
+                    "success", false,
+                    "mensaje", "El producto no se puede eliminar porque tiene pedidos asociados."
             ));
         } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
