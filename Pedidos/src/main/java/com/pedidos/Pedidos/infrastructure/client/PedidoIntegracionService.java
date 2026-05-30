@@ -138,7 +138,7 @@ public class PedidoIntegracionService {
                 pedido.getNumeroPedido(),
                 pedido.getNombreCliente(),
                 pedido.getEmailCliente(),
-                pedido.getEmailCliente(),
+                null,
                 pedido.getTotal(),
                 toNotificationItems(pedido.getDetalles())
         );

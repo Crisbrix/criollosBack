@@ -26,7 +26,7 @@ public class NotificationService {
     public NotificationService(
             RestTemplate restTemplate,
             @Value("${notification.service.url:https://noti-b116.onrender.com}") String notificationServiceUrl,
-            @Value("${notification.recipient.email:frankgomez1708@gmail.com}") String defaultRecipientEmail
+            @Value("${notification.recipient.email:cmateoramirez@ucundinamarca.edu.co}") String defaultRecipientEmail
     ) {
         this.restTemplate = restTemplate;
         this.notificationServiceUrl = notificationServiceUrl;
