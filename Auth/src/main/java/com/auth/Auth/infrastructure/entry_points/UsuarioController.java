@@ -62,9 +62,13 @@ public class UsuarioController {
 
     @DeleteMapping("/borrar/{cedula}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable String cedula) {
-        usuarioUseCase.eliminarUsuarioPorEmail(cedula);
-        return ResponseEntity.ok("Usuario eliminado correctamente");
+    public ResponseEntity<?> eliminarUsuario(@PathVariable String cedula) {
+        try {
+            usuarioUseCase.eliminarUsuarioPorEmail(cedula);
+            return ResponseEntity.ok(Map.of("success", true, "mensaje", "Usuario eliminado correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
     @PutMapping("/actualizar/{cedula}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
