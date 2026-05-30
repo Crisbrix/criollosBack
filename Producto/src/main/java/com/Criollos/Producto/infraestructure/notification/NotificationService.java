@@ -21,13 +21,16 @@ public class NotificationService {
 
     private final RestTemplate restTemplate;
     private final String notificationServiceUrl;
+    private final String defaultRecipientEmail;
 
     public NotificationService(
             RestTemplate restTemplate,
-            @Value("${notification.service.url:https://noti-b116.onrender.com}") String notificationServiceUrl
+            @Value("${notification.service.url:https://noti-b116.onrender.com}") String notificationServiceUrl,
+            @Value("${notification.recipient.email:frankgomez1708@gmail.com}") String defaultRecipientEmail
     ) {
         this.restTemplate = restTemplate;
         this.notificationServiceUrl = notificationServiceUrl;
+        this.defaultRecipientEmail = defaultRecipientEmail;
         log.info("NotificationService inicializado con URL: {}", notificationServiceUrl);
     }
 
@@ -41,7 +44,7 @@ public class NotificationService {
                     "PROD-" + producto.getProductoId(),
                     "Sistema Criollos",
                     "admin@criollos.com",
-                    null,
+                    defaultRecipientEmail,
                     BigDecimal.valueOf(producto.getPrecio()),
                     List.of(new ProductItemRequest(
                             producto.getNombre(),
