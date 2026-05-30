@@ -96,14 +96,10 @@ public class UsuarioController {
             );
 
         } catch (RuntimeException e) {
-
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(
-                            Map.of(
-                                    "error", true,
-                                    "mensaje", e.getMessage()
-                            )
-                    );
+            return ResponseEntity.ok(Map.of(
+                    "success", false,
+                    "mensaje", e.getMessage()
+            ));
         }
     }
 }

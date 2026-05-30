@@ -70,23 +70,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleValidationErrors(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body(Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", HttpStatus.BAD_REQUEST.value(),
-                "error", "Validation Error",
-                "mensaje", ex.getMessage(),
-                "sugerencia", "Verifica los datos enviados"
+        return ResponseEntity.ok(Map.of(
+                "success", false,
+                "mensaje", ex.getMessage()
         ));
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> handleIllegalState(IllegalStateException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", HttpStatus.CONFLICT.value(),
-                "error", "Business Rule Error",
-                "mensaje", ex.getMessage(),
-                "sugerencia", "Verifica el stock disponible del producto"
+        return ResponseEntity.ok(Map.of(
+                "success", false,
+                "mensaje", ex.getMessage()
         ));
     }
 
@@ -151,11 +145,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneralErrors(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "error", "Internal Server Error",
-                "mensaje", "Error interno del servidor",
-                "sugerencia", "Intenta más tarde o contacta al administrador"
+                "success", false,
+                "mensaje", "Error interno del servidor: " + ex.getMessage()
         ));
     }
 }

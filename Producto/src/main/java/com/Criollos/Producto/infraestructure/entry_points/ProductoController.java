@@ -35,7 +35,7 @@ public class ProductoController {
             );
             notificationService.sendProductCreatedNotification(producto);
             return ResponseEntity.ok(producto);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "mensaje", e.getMessage()
@@ -57,8 +57,15 @@ public class ProductoController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<Producto>> obtenerTodosLosProductos() {
-        return ResponseEntity.ok(productoUseCase.obtenerTodosLosProductos());
+    public ResponseEntity<?> obtenerTodosLosProductos() {
+        try {
+            return ResponseEntity.ok(productoUseCase.obtenerTodosLosProductos());
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of(
+                    "success", false,
+                    "mensaje", e.getMessage()
+            ));
+        }
     }
 
     @PutMapping("/actualizar/{productoId}")
@@ -70,7 +77,7 @@ public class ProductoController {
                     productoMapper.toDomain(productoData)
             );
             return ResponseEntity.ok(producto);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "mensaje", e.getMessage()
@@ -100,7 +107,7 @@ public class ProductoController {
         try {
             Producto producto = productoUseCase.reducirStock(productoId, cantidad);
             return ResponseEntity.ok(producto);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "mensaje", e.getMessage()
@@ -114,7 +121,7 @@ public class ProductoController {
         try {
             Producto producto = productoUseCase.reponerStock(productoId, cantidad);
             return ResponseEntity.ok(producto);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "mensaje", e.getMessage()
@@ -126,7 +133,7 @@ public class ProductoController {
     public ResponseEntity<?> buscarPorNombre(@RequestParam String nombre) {
         try {
             return ResponseEntity.ok(productoUseCase.buscarProductoPorNombre(nombre));
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "mensaje", e.getMessage()
@@ -135,7 +142,14 @@ public class ProductoController {
     }
 
     @GetMapping("/bajo-stock")
-    public ResponseEntity<List<Producto>> productosBajoStock() {
-        return ResponseEntity.ok(productoUseCase.productosBajoStock());
+    public ResponseEntity<?> productosBajoStock() {
+        try {
+            return ResponseEntity.ok(productoUseCase.productosBajoStock());
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of(
+                    "success", false,
+                    "mensaje", e.getMessage()
+            ));
+        }
     }
 }

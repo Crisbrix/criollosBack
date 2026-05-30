@@ -30,29 +30,45 @@ public class PedidoController {
     private final PedidoIntegracionService pedidoIntegracionService;
 
     @PostMapping("/guardar")
-    public ResponseEntity<Pedido> guardarPedido(@RequestBody PedidoData pedidoData) {
-        Pedido pedido = pedidoMapper.toPedido(pedidoData);
-        pedidoIntegracionService.validarPedidoConApis(pedido);
-        Pedido pedidoGuardado = pedidoUseCase.guardarPedido(pedido);
-        pedidoIntegracionService.reducirStock(pedidoGuardado);
-        pedidoIntegracionService.notificarPedidoCreado(pedidoGuardado);
-        return new ResponseEntity<>(pedidoGuardado, HttpStatus.OK);
+    public ResponseEntity<?> guardarPedido(@RequestBody PedidoData pedidoData) {
+        try {
+            Pedido pedido = pedidoMapper.toPedido(pedidoData);
+            pedidoIntegracionService.validarPedidoConApis(pedido);
+            Pedido pedidoGuardado = pedidoUseCase.guardarPedido(pedido);
+            pedidoIntegracionService.reducirStock(pedidoGuardado);
+            pedidoIntegracionService.notificarPedidoCreado(pedidoGuardado);
+            return new ResponseEntity<>(pedidoGuardado, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 
     @GetMapping("/buscar/{numeroPedido}")
-    public ResponseEntity<Pedido> obtenerPedidoPorNumero(@PathVariable String numeroPedido) {
-        Pedido pedido = pedidoUseCase.buscarPedidoPorNumero(numeroPedido);
-        return new ResponseEntity<>(pedido, HttpStatus.OK);
+    public ResponseEntity<?> obtenerPedidoPorNumero(@PathVariable String numeroPedido) {
+        try {
+            Pedido pedido = pedidoUseCase.buscarPedidoPorNumero(numeroPedido);
+            return new ResponseEntity<>(pedido, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Pedido>> listarPedidos() {
-        return ResponseEntity.ok(pedidoUseCase.listarPedidos());
+    public ResponseEntity<?> listarPedidos() {
+        try {
+            return ResponseEntity.ok(pedidoUseCase.listarPedidos());
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 
     @GetMapping("/listar/estado/{estado}")
-    public ResponseEntity<List<Pedido>> listarPedidosPorEstado(@PathVariable String estado) {
-        return ResponseEntity.ok(pedidoUseCase.listarPedidosPorEstado(estado));
+    public ResponseEntity<?> listarPedidosPorEstado(@PathVariable String estado) {
+        try {
+            return ResponseEntity.ok(pedidoUseCase.listarPedidosPorEstado(estado));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
 
     @PutMapping("/actualizar/{numeroPedido}")
@@ -64,7 +80,7 @@ public class PedidoController {
             Pedido pedidoActualizado = pedidoUseCase.actualizarPedido(numeroPedido, pedidoMapper.toPedido(pedidoData));
             return ResponseEntity.ok(pedidoActualizado);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "mensaje", e.getMessage()));
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
         }
     }
 
@@ -77,7 +93,7 @@ public class PedidoController {
             Pedido pedidoActualizado = pedidoUseCase.actualizarEstadoPedido(numeroPedido, estadoRequest.get("estado"));
             return ResponseEntity.ok(pedidoActualizado);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "mensaje", e.getMessage()));
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
         }
     }
 
@@ -87,7 +103,7 @@ public class PedidoController {
             pedidoUseCase.eliminarPedidoPorNumero(numeroPedido);
             return ResponseEntity.ok(Map.of("success", true, "mensaje", "Pedido eliminado correctamente"));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("success", false, "mensaje", e.getMessage()));
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
         }
     }
 }
