@@ -5,6 +5,8 @@ import com.auth.Auth.domain.model.gateway.EncrypterGateway;
 import com.auth.Auth.domain.model.gateway.UsuarioGateWay;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class UsuarioUseCase {
 
@@ -23,20 +25,11 @@ public class UsuarioUseCase {
     }
 
     public Usuario buscarUsuarioPorEmail(String cedula) {
-        try {
-            return usuarioGateWay.buscarUsuarioPorCedula(cedula);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new Usuario();
-        }
+        return usuarioGateWay.buscarUsuarioPorCedula(cedula);
     }
 
     public void eliminarUsuarioPorEmail(String cedula) {
-        try {
-            usuarioGateWay.eliminarUsuarioPorEmail(cedula);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        usuarioGateWay.eliminarUsuarioPorEmail(cedula);
     }
 
     public Usuario actualizarUsuario(String cedula, Usuario usuario) {
@@ -61,5 +54,8 @@ public class UsuarioUseCase {
         }
 
         return usuario;
+    }
+    public List<Usuario> listarUsuarios() {
+        return usuarioGateWay.listarUsuarios();
     }
 }

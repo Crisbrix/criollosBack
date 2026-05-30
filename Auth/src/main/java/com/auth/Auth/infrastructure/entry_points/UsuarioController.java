@@ -102,4 +102,12 @@ public class UsuarioController {
             ));
         }
     }
+    @GetMapping("/listar")
+    public ResponseEntity<?> listarUsuarios() {
+        try {
+            return ResponseEntity.ok(usuarioUseCase.listarUsuarios());
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
+    }
 }

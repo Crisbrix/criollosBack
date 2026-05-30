@@ -5,6 +5,8 @@ import com.auth.Auth.domain.model.gateway.UsuarioGateWay;
 import com.auth.Auth.infrastructure.mapper.UsuarioMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,6 +27,12 @@ public class UsuarioDataGatewayImpl implements UsuarioGateWay {
         return repository.findByCedula(cedula)
                 .map(mapper::toUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+    @Override
+    public List<Usuario> listarUsuarios() {
+        return repository.findAll().stream()
+                .map(mapper::toUsuario)
+                .toList();
     }
 
     @Override
