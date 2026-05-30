@@ -72,9 +72,13 @@ public class UsuarioController {
     }
     @PutMapping("/actualizar/{cedula}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable String cedula, @RequestBody UsuarioData usuarioData) {
-        Usuario usuarioActualizado = usuarioUseCase.actualizarUsuario(cedula,  usuarioMapper.toUsuario(usuarioData));
-        return ResponseEntity.ok(usuarioActualizado);
+    public ResponseEntity<?> actualizarUsuario(@PathVariable String cedula, @RequestBody UsuarioData usuarioData) {
+        try {
+            Usuario usuarioActualizado = usuarioUseCase.actualizarUsuario(cedula, usuarioMapper.toUsuario(usuarioData));
+            return ResponseEntity.ok(usuarioActualizado);
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "mensaje", e.getMessage()));
+        }
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
