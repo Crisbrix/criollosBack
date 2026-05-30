@@ -87,11 +87,7 @@ public class ProductoUseCase {
  }
 
  public void eliminarProducto(Integer productoId){
-  try{
-   productoGateway.eliminarProductoPorId(productoId);
-  }catch (Exception e){
-   System.out.println(e.getMessage());
-  }
+  productoGateway.eliminarProductoPorId(productoId);
  }
 
  public Producto reducirStock(Integer id, Integer cantidad) {
