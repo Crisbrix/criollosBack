@@ -24,7 +24,7 @@ public class NotificationService {
 
     public NotificationService(
             RestTemplate restTemplate,
-            @Value("${notification.service.url:http://localhost:8083}") String notificationServiceUrl
+            @Value("${notification.service.url:https://noti-b116.onrender.com}") String notificationServiceUrl
     ) {
         this.restTemplate = restTemplate;
         this.notificationServiceUrl = notificationServiceUrl;
